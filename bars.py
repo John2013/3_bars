@@ -11,10 +11,10 @@ def load_data(filepath):
 def get_biggest_bar(data):
     biggest_bar = None
     max_seats_count = 0
-    for bar_ in data['features']:
-        if bar_['properties']['Attributes']['SeatsCount'] > max_seats_count:
-            biggest_bar = bar_
-            max_seats_count = bar_['properties']['Attributes']['SeatsCount']
+    for bar in data['features']:
+        if bar['properties']['Attributes']['SeatsCount'] > max_seats_count:
+            biggest_bar = bar
+            max_seats_count = bar['properties']['Attributes']['SeatsCount']
 
     return biggest_bar
 
@@ -22,54 +22,54 @@ def get_biggest_bar(data):
 def get_smallest_bar(data):
     smallest_bar = None
     min_seats_count = sys.maxsize
-    for bar_ in data['features']:
-        if bar_['properties']['Attributes']['SeatsCount'] < min_seats_count:
-            smallest_bar = bar_
-            min_seats_count = bar_['properties']['Attributes']['SeatsCount']
+    for bar in data['features']:
+        if bar['properties']['Attributes']['SeatsCount'] < min_seats_count:
+            smallest_bar = bar
+            min_seats_count = bar['properties']['Attributes']['SeatsCount']
 
     return smallest_bar
 
 
-def haversine(lat1, lon1, lat2, lon2):
+def get_distance(latitude1, longitude1, latitude2, longitude2):
     """
     Вычисляет расстояние в километрах между двумя точками, учитывая окружность Земли.
     https://en.wikipedia.org/wiki/Haversine_formula
     """
 
     # convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(radians, (lon1, lat1, lon2, lat2))
+    longitude1, latitude1, longitude2, latitude2 = map(radians, (longitude1, latitude1, longitude2, latitude2))
 
     # haversine formula
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    dlongitude = longitude2 - longitude1
+    dlatitude = latitude2 - latitude1
+    a = sin(dlatitude / 2) ** 2 + cos(latitude1) * cos(latitude2) * sin(dlongitude / 2) ** 2
     c = 2 * asin(sqrt(a))
     km = 6367 * c
     return km
 
 
-def get_closest_bar(data, lon1, lat1):
+def get_closest_bar(data, users_longitude, users_latitude):
     closest_bar = None
     min_distance = sys.float_info.max
-    for bar_ in data['features']:
-        lon2, lat2 = bar_['geometry']['coordinates']
-        distance = haversine(lon1, lat1, lon2, lat2)
+    for bar in data['features']:
+        bars_longitude, bars_latitude = bar['geometry']['coordinates']
+        distance = get_distance(users_longitude, users_latitude, bars_longitude, bars_latitude)
         if distance < min_distance:
-            closest_bar = bar_
+            closest_bar = bar
             min_distance = distance
 
     return closest_bar
 
 
 if __name__ == '__main__':
-    lon = float(input("Введите долготу: "))
-    lat = float(input("широту: "))
+    longitude = float(input("Введите долготу: "))
+    latitude = float(input("широту: "))
     path = "bars.json"
     data = load_data(path)
 
     biggest_bar = get_biggest_bar(data)
     smallest_bar = get_smallest_bar(data)
-    closest_bar = get_closest_bar(data, lon, lat)
+    closest_bar = get_closest_bar(data, longitude, latitude)
 
     print("Самый большой бар:", biggest_bar['properties']['Attributes']['Name'])
     print("Самый маленький бар:", smallest_bar['properties']['Attributes']['Name'])
