@@ -9,25 +9,23 @@ def load_data(filepath):
 
 
 def get_biggest_bar(bars):
-    biggest_bar = None
-    max_seats_count = 0
-    for bar in bars['features']:
-        if bar['properties']['Attributes']['SeatsCount'] > max_seats_count:
-            biggest_bar = bar
-            max_seats_count = bar['properties']['Attributes']['SeatsCount']
+    max_seats_count = max([bar['properties']['Attributes']['SeatsCount'] for bar in bars['features']])
 
-    return biggest_bar
+    for bar in bars['features']:
+        if bar['properties']['Attributes']['SeatsCount'] == max_seats_count:
+            return bar
+
+    return None
 
 
 def get_smallest_bar(bars):
-    smallest_bar = None
-    min_seats_count = sys.maxsize
-    for bar in bars['features']:
-        if bar['properties']['Attributes']['SeatsCount'] < min_seats_count:
-            smallest_bar = bar
-            min_seats_count = bar['properties']['Attributes']['SeatsCount']
+    min_seats_count = min([bar['properties']['Attributes']['SeatsCount'] for bar in bars['features']])
 
-    return smallest_bar
+    for bar in bars['features']:
+        if bar['properties']['Attributes']['SeatsCount'] == min_seats_count:
+            return bar
+
+    return None
 
 
 def get_distance(latitude1, longitude1, latitude2, longitude2):
@@ -49,16 +47,19 @@ def get_distance(latitude1, longitude1, latitude2, longitude2):
 
 
 def get_closest_bar(bars, users_longitude, users_latitude):
-    closest_bar = None
-    min_distance = sys.float_info.max
     for bar in bars['features']:
-        bars_longitude, bars_latitude = bar['geometry']['coordinates']
-        distance = get_distance(users_longitude, users_latitude, bars_longitude, bars_latitude)
-        if distance < min_distance:
-            closest_bar = bar
-            min_distance = distance
+        bar['geometry']['distance'] = get_distance(
+            bar['geometry']['coordinates'][0],
+            bar['geometry']['coordinates'][1],
+            users_longitude,
+            users_latitude
+        )
+    min_distance = min([bar['geometry']['distance'] for bar in bars['features']])
+    for bar in bars['features']:
+        if bar['geometry']['distance'] == min_distance:
+            return bar
 
-    return closest_bar
+    return None
 
 
 if __name__ == '__main__':
