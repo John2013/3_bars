@@ -1,6 +1,24 @@
 import json
-import sys
+
 from math import radians, sin, cos, asin, sqrt
+
+
+def get_distance(latitude1, longitude1, latitude2, longitude2):
+    """
+    Вычисляет расстояние в километрах между двумя точками, учитывая окружность Земли.
+    https://en.wikipedia.org/wiki/Haversine_formula
+    """
+
+    # convert decimal degrees to radians
+    longitude1, latitude1, longitude2, latitude2 = map(radians, (longitude1, latitude1, longitude2, latitude2))
+
+    # haversine formula
+    dlongitude = longitude2 - longitude1
+    dlatitude = latitude2 - latitude1
+    a = sin(dlatitude / 2) ** 2 + cos(latitude1) * cos(latitude2) * sin(dlongitude / 2) ** 2
+    c = 2 * asin(sqrt(a))
+    km = 6367 * c
+    return km
 
 
 def load_data(filepath):
@@ -26,24 +44,6 @@ def get_smallest_bar(bars):
             return bar
 
     return None
-
-
-def get_distance(latitude1, longitude1, latitude2, longitude2):
-    """
-    Вычисляет расстояние в километрах между двумя точками, учитывая окружность Земли.
-    https://en.wikipedia.org/wiki/Haversine_formula
-    """
-
-    # convert decimal degrees to radians
-    longitude1, latitude1, longitude2, latitude2 = map(radians, (longitude1, latitude1, longitude2, latitude2))
-
-    # haversine formula
-    dlongitude = longitude2 - longitude1
-    dlatitude = latitude2 - latitude1
-    a = sin(dlatitude / 2) ** 2 + cos(latitude1) * cos(latitude2) * sin(dlongitude / 2) ** 2
-    c = 2 * asin(sqrt(a))
-    km = 6367 * c
-    return km
 
 
 def get_closest_bar(bars, users_longitude, users_latitude):
