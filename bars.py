@@ -8,10 +8,10 @@ def load_data(filepath):
         return json.load(f)
 
 
-def get_biggest_bar(data):
+def get_biggest_bar(bars):
     biggest_bar = None
     max_seats_count = 0
-    for bar in data['features']:
+    for bar in bars['features']:
         if bar['properties']['Attributes']['SeatsCount'] > max_seats_count:
             biggest_bar = bar
             max_seats_count = bar['properties']['Attributes']['SeatsCount']
@@ -19,10 +19,10 @@ def get_biggest_bar(data):
     return biggest_bar
 
 
-def get_smallest_bar(data):
+def get_smallest_bar(bars):
     smallest_bar = None
     min_seats_count = sys.maxsize
-    for bar in data['features']:
+    for bar in bars['features']:
         if bar['properties']['Attributes']['SeatsCount'] < min_seats_count:
             smallest_bar = bar
             min_seats_count = bar['properties']['Attributes']['SeatsCount']
@@ -48,10 +48,10 @@ def get_distance(latitude1, longitude1, latitude2, longitude2):
     return km
 
 
-def get_closest_bar(data, users_longitude, users_latitude):
+def get_closest_bar(bars, users_longitude, users_latitude):
     closest_bar = None
     min_distance = sys.float_info.max
-    for bar in data['features']:
+    for bar in bars['features']:
         bars_longitude, bars_latitude = bar['geometry']['coordinates']
         distance = get_distance(users_longitude, users_latitude, bars_longitude, bars_latitude)
         if distance < min_distance:
@@ -65,11 +65,11 @@ if __name__ == '__main__':
     longitude = float(input("Введите долготу: "))
     latitude = float(input("широту: "))
     path = "bars.json"
-    data = load_data(path)
+    bars = load_data(path)
 
-    biggest_bar = get_biggest_bar(data)
-    smallest_bar = get_smallest_bar(data)
-    closest_bar = get_closest_bar(data, longitude, latitude)
+    biggest_bar = get_biggest_bar(bars)
+    smallest_bar = get_smallest_bar(bars)
+    closest_bar = get_closest_bar(bars, longitude, latitude)
 
     print("Самый большой бар:", biggest_bar['properties']['Attributes']['Name'])
     print("Самый маленький бар:", smallest_bar['properties']['Attributes']['Name'])
