@@ -1,6 +1,4 @@
 import json
-from pprint import pprint
-
 import sys
 
 from math import radians, sin, cos, asin, sqrt
