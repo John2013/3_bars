@@ -1,6 +1,5 @@
 import json
 import sys
-
 from math import radians, sin, cos, asin, sqrt
 
 
