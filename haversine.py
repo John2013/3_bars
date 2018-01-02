@@ -10,7 +10,6 @@ def get_distance(latitude1: float, longitude1: float, latitude2: float,
     Земли.
     https://en.wikipedia.org/wiki/Haversine_formula
     """
-
     longitude1, latitude1, longitude2, latitude2 = \
         map(radians, (longitude1, latitude1, longitude2, latitude2))
 
