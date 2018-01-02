@@ -1,30 +1,24 @@
 import json
+import sys
 
 from haversine import get_distance
 
-import sys
 
-
-def load_data(filepath):
-    with open(filepath, encoding='utf-8') as f:
-        return json.load(f)
+def load_data(file_path):
+    with open(file_path, encoding='utf-8') as file:
+        return json.load(file)
 
 
 def get_biggest_bar(bars):
-    max_seats_count = max([bar['properties']['Attributes']['SeatsCount'] for bar in bars['features']])
-
-    for bar in bars['features']:
-        if bar['properties']['Attributes']['SeatsCount'] == max_seats_count:
-            return bar
+    return max(bars['features'], key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
 
 def get_smallest_bar(bars):
-    min_seats_count = min([bar['properties']['Attributes']['SeatsCount'] for bar in bars['features']])
+    return min(bars['features'], key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
-    for bar in bars['features']:
-        if bar['properties']['Attributes']['SeatsCount'] == min_seats_count:
-            return bar
 
+# Спасибо проверяющим из devman.org что намекнули на потрясный функционал min и max функций, не знал о нём.
+# С Новым Годом вас!
 
 def get_closest_bar(bars, users_longitude, users_latitude):
     for bar in bars['features']:
@@ -34,10 +28,8 @@ def get_closest_bar(bars, users_longitude, users_latitude):
             users_longitude,
             users_latitude
         )
-    min_distance = min([bar['geometry']['distance'] for bar in bars['features']])
-    for bar in bars['features']:
-        if bar['geometry']['distance'] == min_distance:
-            return bar
+
+    return min(bars['features'], key=lambda bar: bar['geometry']['distance'])
 
 
 if __name__ == '__main__':
