@@ -1,5 +1,7 @@
 from math import radians, sin, cos, asin, sqrt
 
+EARTH_RADIUS = 6367
+
 
 def get_distance(latitude1, longitude1, latitude2, longitude2):
     """
@@ -7,7 +9,6 @@ def get_distance(latitude1, longitude1, latitude2, longitude2):
     Земли.
     https://en.wikipedia.org/wiki/Haversine_formula
     """
-    EARTH_RADIUS = 6367
 
     # convert decimal degrees to radians
     longitude1, latitude1, longitude2, latitude2 = \
