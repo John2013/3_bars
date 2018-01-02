@@ -10,15 +10,19 @@ def load_data(file_path):
 
 
 def get_biggest_bar(bars):
-    return max(bars['features'], key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
+    return max(bars['features'],
+               key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
 
 def get_smallest_bar(bars):
-    return min(bars['features'], key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
+    return min(bars['features'],
+               key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
 
-# Спасибо проверяющим из devman.org что намекнули на потрясный функционал min и max функций, не знал о нём.
+# Спасибо проверяющим из devman.org что намекнули на потрясный функционал min и
+# max функций, не знал о нём.
 # С Новым Годом вас!
+
 
 def get_closest_bar(bars, users_longitude, users_latitude):
     for bar in bars['features']:
@@ -46,6 +50,9 @@ if __name__ == '__main__':
     smallest_bar = get_smallest_bar(bars)
     closest_bar = get_closest_bar(bars, longitude, latitude)
 
-    print("Самый большой бар:", biggest_bar['properties']['Attributes']['Name'])
-    print("Самый маленький бар:", smallest_bar['properties']['Attributes']['Name'])
-    print("Ближайший бар:", closest_bar['properties']['Attributes']['Name'])
+    print("Самый большой бар:",
+          biggest_bar['properties']['Attributes']['Name'])
+    print("Самый маленький бар:",
+          smallest_bar['properties']['Attributes']['Name'])
+    print("Ближайший бар:",
+          closest_bar['properties']['Attributes']['Name'])
