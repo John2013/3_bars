@@ -1,24 +1,8 @@
 import json
 
-from math import radians, sin, cos, asin, sqrt
+from haversine import get_distance
 
-
-def get_distance(latitude1, longitude1, latitude2, longitude2):
-    """
-    Вычисляет расстояние в километрах между двумя точками, учитывая окружность Земли.
-    https://en.wikipedia.org/wiki/Haversine_formula
-    """
-
-    # convert decimal degrees to radians
-    longitude1, latitude1, longitude2, latitude2 = map(radians, (longitude1, latitude1, longitude2, latitude2))
-
-    # haversine formula
-    dlongitude = longitude2 - longitude1
-    dlatitude = latitude2 - latitude1
-    a = sin(dlatitude / 2) ** 2 + cos(latitude1) * cos(latitude2) * sin(dlongitude / 2) ** 2
-    c = 2 * asin(sqrt(a))
-    km = 6367 * c
-    return km
+import sys
 
 
 def load_data(filepath):
@@ -33,8 +17,6 @@ def get_biggest_bar(bars):
         if bar['properties']['Attributes']['SeatsCount'] == max_seats_count:
             return bar
 
-    return None
-
 
 def get_smallest_bar(bars):
     min_seats_count = min([bar['properties']['Attributes']['SeatsCount'] for bar in bars['features']])
@@ -42,8 +24,6 @@ def get_smallest_bar(bars):
     for bar in bars['features']:
         if bar['properties']['Attributes']['SeatsCount'] == min_seats_count:
             return bar
-
-    return None
 
 
 def get_closest_bar(bars, users_longitude, users_latitude):
@@ -59,14 +39,16 @@ def get_closest_bar(bars, users_longitude, users_latitude):
         if bar['geometry']['distance'] == min_distance:
             return bar
 
-    return None
-
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        file_path = sys.argv[1]
+    else:
+        file_path = input("Введите путь до файла с данными о барах: ")
+
+    bars = load_data(file_path)
     longitude = float(input("Введите долготу: "))
     latitude = float(input("широту: "))
-    path = "bars.json"
-    bars = load_data(path)
 
     biggest_bar = get_biggest_bar(bars)
     smallest_bar = get_smallest_bar(bars)
