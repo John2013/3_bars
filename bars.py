@@ -4,27 +4,22 @@ import sys
 from haversine import get_distance
 
 
-def load_data(file_path):
+def load_data(file_path: str):
     with open(file_path, encoding='utf-8') as file:
         return json.load(file)
 
 
-def get_biggest_bar(bars):
+def get_biggest_bar(bars: dict):
     return max(bars['features'],
                key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
 
-def get_smallest_bar(bars):
+def get_smallest_bar(bars: dict):
     return min(bars['features'],
                key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
 
-# Спасибо проверяющим из devman.org что намекнули на потрясный функционал min и
-# max функций, не знал о нём.
-# С Новым Годом вас!
-
-
-def get_closest_bar(bars, users_longitude, users_latitude):
+def get_closest_bar(bars: dict, users_longitude: float, users_latitude: float):
     for bar in bars['features']:
         bar['geometry']['distance'] = get_distance(
             bar['geometry']['coordinates'][0],
