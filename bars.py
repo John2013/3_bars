@@ -10,13 +10,15 @@ def load_data(file_path: str):
 
 
 def get_biggest_bar(bars: dict):
-    return max(bars['features'],
-               key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
+    return max(
+        bars['features'],
+        key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
 
 def get_smallest_bar(bars: dict):
-    return min(bars['features'],
-               key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
+    return min(
+        bars['features'],
+        key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
 
 
 def get_closest_bar(bars: dict, users_longitude: float, users_latitude: float):
@@ -45,9 +47,12 @@ if __name__ == '__main__':
     smallest_bar = get_smallest_bar(bars)
     closest_bar = get_closest_bar(bars, longitude, latitude)
 
-    print("Самый большой бар:",
-          biggest_bar['properties']['Attributes']['Name'])
-    print("Самый маленький бар:",
-          smallest_bar['properties']['Attributes']['Name'])
-    print("Ближайший бар:",
-          closest_bar['properties']['Attributes']['Name'])
+    print(
+        "Самый большой бар:",
+        biggest_bar['properties']['Attributes']['Name'])
+    print(
+        "Самый маленький бар:",
+        smallest_bar['properties']['Attributes']['Name'])
+    print(
+        "Ближайший бар:",
+        closest_bar['properties']['Attributes']['Name'])

@@ -3,13 +3,11 @@ from math import radians, sin, cos, asin, sqrt
 EARTH_RADIUS = 6367
 
 
-def get_distance(latitude1: float, longitude1: float, latitude2: float,
-                 longitude2: float) -> float:
-    """
-    Вычисляет расстояние в километрах между двумя точками, учитывая окружность
-    Земли.
-    https://en.wikipedia.org/wiki/Haversine_formula
-    """
+def get_distance(
+        latitude1: float,
+        longitude1: float,
+        latitude2: float,
+        longitude2: float) -> float:
     longitude1, latitude1, longitude2, latitude2 = \
         map(radians, (longitude1, latitude1, longitude2, latitude2))
 
