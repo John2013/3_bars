@@ -2,7 +2,7 @@ import json
 import sys
 
 from haversine import get_distance
-from input import *
+from input import input_float, input_file
 
 
 def load_data(file_path: str):
