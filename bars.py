@@ -1,6 +1,8 @@
 import json
 import sys
 
+from os.path import isfile
+
 from haversine import get_distance
 from input import input_float, input_file
 
