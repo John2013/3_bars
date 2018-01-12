@@ -4,7 +4,6 @@ import sys
 from os.path import isfile
 
 from haversine import get_distance
-from input import input_float, input_file
 
 
 def load_data(file_path: str):
@@ -35,14 +34,22 @@ def get_closest_bar(bars: dict, users_longitude: float, users_latitude: float):
 
 
 if __name__ == '__main__':
+    file_path = ""
     if len(sys.argv) > 1 and isfile(sys.argv[1]):
         file_path = sys.argv[1]
     else:
-        file_path = input_file("Введите путь до файла с данными о барах: ")
+        exit("Ошибка: Отсутствует путь к файлу или неверный путь к файлу")
 
     bars = load_data(file_path)['features']
-    longitude = input_float("Введите долготу: ")
-    latitude = input_float("широту: ")
+
+    longitude = input("Введите долготу: ")
+    if not longitude.isdigit():
+        exit("Ошибка: ожидается число, введено " + longitude)
+    latitude = input("широту: ")
+    if not longitude.isdigit():
+        exit("Ошибка: ожидается число, введено " + latitude)
+
+    longitude, latitude = float(longitude), float(latitude)
 
     biggest_bar = get_biggest_bar(bars)
     smallest_bar = get_smallest_bar(bars)
