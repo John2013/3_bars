@@ -30,7 +30,9 @@ def get_closest_bar(bars: dict, users_longitude: float, users_latitude: float):
             bar['geometry']['coordinates'][0],
             bar['geometry']['coordinates'][1],
             users_longitude,
-            users_latitude))
+            users_latitude
+        )
+    )
 
 
 if __name__ == '__main__':
