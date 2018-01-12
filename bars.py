@@ -11,21 +11,21 @@ def load_data(file_path: str):
         return json.load(file)
 
 
-def get_biggest_bar(bars: dict):
+def get_biggest_bar(bars: list):
     return max(
         bars,
         key=lambda bar: bar['properties']['Attributes']['SeatsCount']
     )
 
 
-def get_smallest_bar(bars: dict):
+def get_smallest_bar(bars: list):
     return min(
         bars,
         key=lambda bar: bar['properties']['Attributes']['SeatsCount']
     )
 
 
-def get_closest_bar(bars: dict, users_longitude: float, users_latitude: float):
+def get_closest_bar(bars: list, users_longitude: float, users_latitude: float):
     return min(
         bars,
         key=lambda bar: get_distance(
