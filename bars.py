@@ -14,13 +14,15 @@ def load_data(file_path: str):
 def get_biggest_bar(bars: dict):
     return max(
         bars,
-        key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
+        key=lambda bar: bar['properties']['Attributes']['SeatsCount']
+    )
 
 
 def get_smallest_bar(bars: dict):
     return min(
         bars,
-        key=lambda bar: bar['properties']['Attributes']['SeatsCount'])
+        key=lambda bar: bar['properties']['Attributes']['SeatsCount']
+    )
 
 
 def get_closest_bar(bars: dict, users_longitude: float, users_latitude: float):
