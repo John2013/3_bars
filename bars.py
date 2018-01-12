@@ -57,10 +57,13 @@ if __name__ == '__main__':
 
     print(
         "Самый большой бар:",
-        biggest_bar['properties']['Attributes']['Name'])
+        biggest_bar['properties']['Attributes']['Name']
+    )
     print(
         "Самый маленький бар:",
-        smallest_bar['properties']['Attributes']['Name'])
+        smallest_bar['properties']['Attributes']['Name']
+    )
     print(
         "Ближайший бар:",
-        closest_bar['properties']['Attributes']['Name'])
+        closest_bar['properties']['Attributes']['Name']
+    )
