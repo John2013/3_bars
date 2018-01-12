@@ -46,28 +46,27 @@ if __name__ == '__main__':
 
     bars = load_data(file_path)['features']
 
-    longitude = input("Введите долготу: ")
-    if not longitude.isdigit():
-        exit("Ошибка: ожидается число, введено " + longitude)
-    latitude = input("широту: ")
-    if not longitude.isdigit():
-        exit("Ошибка: ожидается число, введено " + latitude)
+    longitude, latitude = 0, 0
+    try:
+        longitude = float(input("Введите долготу: "))
+    except ValueError:
+        exit("Ошибка: введено некорректное число")
 
-    longitude, latitude = float(longitude), float(latitude)
+    try:
+        latitude = float(input("широту: "))
+    except ValueError:
+        exit("Ошибка: введено некорректное число")
 
     biggest_bar = get_biggest_bar(bars)
     smallest_bar = get_smallest_bar(bars)
     closest_bar = get_closest_bar(bars, longitude, latitude)
 
-    print(
-        "Самый большой бар:",
-        biggest_bar['properties']['Attributes']['Name']
+    print("Самый большой бар: {}".format(
+        biggest_bar['properties']['Attributes']['Name']),
     )
-    print(
-        "Самый маленький бар:",
-        smallest_bar['properties']['Attributes']['Name']
+    print("Самый маленький бар: {}".format(
+        smallest_bar['properties']['Attributes']['Name']),
     )
-    print(
-        "Ближайший бар:",
-        closest_bar['properties']['Attributes']['Name']
+    print("Ближайший бар: {}".format(
+        closest_bar['properties']['Attributes']['Name']),
     )
