@@ -46,7 +46,6 @@ if __name__ == '__main__':
 
     bars = load_data(file_path)['features']
 
-    longitude, latitude = 0, 0
     try:
         longitude = float(input("Введите долготу: "))
     except ValueError:
@@ -61,12 +60,12 @@ if __name__ == '__main__':
     smallest_bar = get_smallest_bar(bars)
     closest_bar = get_closest_bar(bars, longitude, latitude)
 
-    print("Самый большой бар: {}".format(
-        biggest_bar['properties']['Attributes']['Name']),
-    )
-    print("Самый маленький бар: {}".format(
-        smallest_bar['properties']['Attributes']['Name']),
-    )
-    print("Ближайший бар: {}".format(
-        closest_bar['properties']['Attributes']['Name']),
+    print(
+        "Самый большой бар: {}\n"
+        "Самый маленький бар: {}\n"
+        "Ближайший бар: {}".format(
+            biggest_bar['properties']['Attributes']['Name'],
+            smallest_bar['properties']['Attributes']['Name'],
+            closest_bar['properties']['Attributes']['Name']
+        )
     )
