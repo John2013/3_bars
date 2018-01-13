@@ -8,13 +8,6 @@ def get_distance(
     longitude2: float,
     radius=6367
 ) -> float:
-    """
-    Выводит расстояние между двумя координатами на сфере по формуле "Haversine"
-
-    https://en.wikipedia.org/wiki/Haversine_formula
-
-    https://stackoverflow.com/questions/4913349/haversine-formula-in-python-bearing-and-distance-between-two-gps-points
-    """
     longitude1, latitude1, longitude2, latitude2 = map(
         radians,
         (
